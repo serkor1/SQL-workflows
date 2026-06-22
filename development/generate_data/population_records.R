@@ -31,7 +31,7 @@ population_records[,
         ##  9: Unkown
         IE_TYPE = sample(
             c(1:3, 9),
-            size = .N,
+            size = 1L,
             replace = TRUE,
             prob = c(
                 0.75,
@@ -46,7 +46,7 @@ population_records[,
         ##  9: Unknown
         KOEN = sample(
             c(1:2, 9),
-            size = .N,
+            size = 1L,
             replace = TRUE,
             prob = c(
                 0.495,
@@ -71,7 +71,7 @@ population_records[,
         FOED_DAG = data.table::as.IDate(
             sample(
                 x = birth_dates,
-                size = .N,
+                size = 1L,
                 replace = TRUE,
                 prob = birth_date_prob
             )
@@ -100,14 +100,14 @@ early_cohort <- sample(
 )
 
 late_cohort <- immigrants[
-    !(early_cohort %in% immigrants)
+    !(immigrants %in% early_cohort)
 ]
 
 population_records[
     PNR %in% early_cohort,
     FOERSTE_INDVANDRING := sample(
         seq(as.Date("1960-01-01"), as.Date("1980-12-31"), by = "day"),
-        size = .N,
+        size = 1L,
         replace = TRUE
     ),
     by = .(
@@ -119,7 +119,7 @@ population_records[
     PNR %in% late_cohort,
     FOERSTE_INDVANDRING := sample(
         seq(as.Date("1999-01-01"), as.Date("2025-12-31"), by = "day"),
-        size = .N,
+        size = 1L,
         replace = TRUE
     ),
     by = .(
