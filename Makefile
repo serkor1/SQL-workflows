@@ -1,4 +1,4 @@
 .PHONY: init
 init: ## Initialize the data
-	@chmod +x scripts/*.sh
-	@scripts/initialize.sh
+	@chmod +x development/scripts/*.sh
+	@development/scripts/initialize.sh

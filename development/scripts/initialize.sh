@@ -2,7 +2,7 @@
 ## script: Initialize Data
 ## objective:
 ##  Run all data-generating scripts
-##  in generate_data
+##  in development/generate_data
 ##
 ## information:
 ##  population_records has to be run first
@@ -15,15 +15,15 @@ mkdir data-repository
 
 ## initialize the population
 ## records
-Rscript generate_data/population_records.R
+Rscript development/generate_data/population_records.R
 
 ## run the remaining scripts
 ## in parallel
-all_scripts=(generate_data/*.R)
+all_scripts=(development/generate_data/*.R)
 
 ## remove the population
 ## records script from the data
-delete=(generate_data/population_records.R)
+delete=(development/generate_data/population_records.R)
 for all_scripts in "${delete[@]}"; do
   for i in "${!all_scripts[@]}"; do
     if [[ ${all_scripts[i]} = $all_scripts ]]; then
