@@ -8,7 +8,7 @@
 ##    a constant number of individuals
 ##    across record years
 ##
-population_size <- 1e3 ## change for higher population
+population_size <- 5e6 ## change for higher population
 
 ## initialize data for each
 ## population member at year zero
