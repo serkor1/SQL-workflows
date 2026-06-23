@@ -5,7 +5,8 @@
 ##
 ##
 ##
-##
+## 1) load all population records
+##    from data-repository
 DT <- data.table::rbindlist(
     {
         ## extract files
@@ -30,7 +31,6 @@ DT <- data.table::rbindlist(
     }
 )
 
-
 ## calculate immigration
 ## year
 DT[,
@@ -41,9 +41,9 @@ DT[,
     ),
 ]
 
-## count immigrations
-## by year
-DT[,
+## aggregate by immigration
+## year (observed)
+yearly_immigration <- DT[,
     .(
         immigrations = data.table::uniqueN(
             PNR
@@ -55,3 +55,40 @@ DT[,
 ][
     order(immigration_year)
 ]
+
+## expand with with missing
+## years
+yearly_immigration <- {
+    ## construct yearly
+    ## data
+    x <- data.table::data.table(
+        year = 1960:2020
+    )
+
+    ## merge data
+    x <- yearly_immigration[
+        x,
+        on = .(
+            immigration_year = year
+        )
+    ]
+
+    ## fill missing years with
+    ## zero (missing years are set to zero)
+    x[,
+        immigrations := data.table::fcoalesce(
+            immigrations,
+            0L
+        ),
+    ]
+
+    ## rename columns to year
+    ## to reflect the observed years
+    data.table::setnames(
+        x,
+        old = "immigration_year",
+        new = "year"
+    )
+
+    x[]
+}
